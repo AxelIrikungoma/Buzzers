@@ -1,12 +1,9 @@
-#include <millisDelay.h>   // library for timers
-
-millisDelay timer;
 
 int LED1 = 2;
 int swich1 = 3;
 int LED2 = 4;
 int swich2 = 5;
-int correct = 6;  //a switch for the animator to press when the answer is correct
+int go_on = 6;  //a switch for the animator to press when the answer is correct or when he/she wants to ask a new question
 int incorrect = 7; // a switch for the animator to press when the answer is incorrect
 
 int player1 = 1;  // player1 belongs to the first team
@@ -17,7 +14,7 @@ void setup() {
   pinMode(LED2, OUTPUT);
   pinMode(swich1,INPUT);
   pinMode(swich2, INPUT);
-  pinMode(correct, INPUT);
+  pinMode(go_on, INPUT);
   pinMode(incorrect, INPUT);
 
 }
@@ -32,7 +29,7 @@ void loop() {
           digitalWrite(LED1, LOW);
           player1 = 0;
         }
-        if (digitalRead(correct) == HIGH){
+        if (digitalRead(go_on) == HIGH){
           digitalWrite(LED1, LOW);
           player1 = 1;
           player2 = 1;
@@ -49,7 +46,7 @@ void loop() {
           digitalWrite(LED2, LOW);
           player2 = 0; //
         }
-          if (digitalRead(correct) == HIGH){
+          if (digitalRead(go_on) == HIGH){
           digitalWrite(LED2, LOW);
           player2 = 1;
           player1 = 1;
@@ -58,7 +55,7 @@ void loop() {
     }
   }
   //code to allow the above two conditionals to restart
- if (player1 == 0 and player2 == 0){
+ if ((player1 == 0 and player2 == 0) || digitalRead(go_on) == HIGH){
   player1 = 1;
   player2 = 1;
    }
