@@ -1,0 +1,66 @@
+#include <millisDelay.h>   // library for timers
+
+millisDelay timer;
+
+int LED1 = 2;
+int swich1 = 3;
+int LED2 = 4;
+int swich2 = 5;
+int correct = 6;  //a switch for the animator to press when the answer is correct
+int incorrect = 7; // a switch for the animator to press when the answer is incorrect
+
+int player1 = 1;  // player1 belongs to the first team
+int player2 = 1;  // player2 belongs to the second team
+
+void setup() {
+  pinMode(LED1, OUTPUT);
+  pinMode(LED2, OUTPUT);
+  pinMode(swich1,INPUT);
+  pinMode(swich2, INPUT);
+  pinMode(correct, INPUT);
+  pinMode(incorrect, INPUT);
+
+}
+
+void loop() {
+  if (player1 == 1){
+    if (digitalRead(swich1) == HIGH){
+      digitalWrite(LED1, HIGH);
+     // timer.start(5000); // starts a 5 sec timer
+      while (digitalRead(LED1) == HIGH){
+        if (digitalRead(incorrect) == HIGH){
+          digitalWrite(LED1, LOW);
+          player1 = 0;
+        }
+        if (digitalRead(correct) == HIGH){
+          digitalWrite(LED1, LOW);
+          player1 = 1;
+          player2 = 1;
+     }
+    }
+   }
+  }
+  if (player2 == 1){
+    if (digitalRead(swich2) == HIGH){
+      digitalWrite(LED2, HIGH);
+     // timer.start(5000); // starts a 5 sec timer
+      while (digitalRead(LED2) == HIGH){ 
+        if (digitalRead(incorrect) == HIGH){
+          digitalWrite(LED2, LOW);
+          player2 = 0; //
+        }
+          if (digitalRead(correct) == HIGH){
+          digitalWrite(LED2, LOW);
+          player2 = 1;
+          player1 = 1;
+        }
+      } 
+    }
+  }
+  //code to allow the above two conditionals to restart
+ if (player1 == 0 and player2 == 0){
+  player1 = 1;
+  player2 = 1;
+   }
+  }
+ 
