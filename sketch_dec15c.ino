@@ -1,4 +1,3 @@
-
 int LED1 = 2;
 int swich1 = 3;
 int LED2 = 4;
@@ -8,6 +7,8 @@ int incorrect = 7; // a switch for the animator to press when the answer is inco
 
 int player1 = 1;  // player1 belongs to the first team
 int player2 = 1;  // player2 belongs to the second team
+
+unsigned long timer_start = 0;
 
 void setup() {
   pinMode(LED1, OUTPUT);
@@ -23,9 +24,9 @@ void loop() {
   if (player1 == 1){
     if (digitalRead(swich1) == HIGH){
       digitalWrite(LED1, HIGH);
-     // timer.start(5000); // starts a 5 sec timer
+      timer_start = millis();
       while (digitalRead(LED1) == HIGH){
-        if (digitalRead(incorrect) == HIGH){
+        if (digitalRead(incorrect) == HIGH || (millis()- timer_start) > 5000UL){
           digitalWrite(LED1, LOW);
           player1 = 0;
         }
@@ -40,9 +41,9 @@ void loop() {
   if (player2 == 1){
     if (digitalRead(swich2) == HIGH){
       digitalWrite(LED2, HIGH);
-     // timer.start(5000); // starts a 5 sec timer
+      timer_start = millis();
       while (digitalRead(LED2) == HIGH){ 
-        if (digitalRead(incorrect) == HIGH){
+        if (digitalRead(incorrect) == HIGH || (millis()- timer_start) > 5000UL){
           digitalWrite(LED2, LOW);
           player2 = 0; //
         }
@@ -60,4 +61,3 @@ void loop() {
   player2 = 1;
    }
   }
- 
